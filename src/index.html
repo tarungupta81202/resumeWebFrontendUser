@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ResumeUserPortfolio</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.paddle.com/paddle/assets/css/animate.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.paddle.com/paddle/assets/css/paddle.css"
+      media="all"
+    />
+
+    <style type="text/css">
+      .apexcharts-canvas {
+        position: relative;
+        user-select: none;
+        /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+      }
+
+      /* scrollbar is not visible by default for legend, hence forcing the visibility */
+      .apexcharts-canvas ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 6px;
+      }
+
+      .apexcharts-canvas ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+        -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+      }
+
+      .apexcharts-inner {
+        position: relative;
+      }
+
+      .apexcharts-text tspan {
+        font-family: inherit;
+      }
+
+      .legend-mouseover-inactive {
+        transition: 0.15s ease all;
+        opacity: 0.2;
+      }
+
+      .apexcharts-series-collapsed {
+        opacity: 0;
+      }
+
+      .apexcharts-tooltip {
+        border-radius: 5px;
+        box-shadow: 2px 2px 6px -4px #999;
+        cursor: default;
+        font-size: 14px;
+        left: 62px;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        white-space: nowrap;
+        z-index: 12;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-tooltip.apexcharts-active {
+        opacity: 1;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-tooltip.apexcharts-theme-light {
+        border: 1px solid #e3e3e3;
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .apexcharts-tooltip.apexcharts-theme-dark {
+        color: #fff;
+        background: rgba(30, 30, 30, 0.8);
+      }
+
+      .apexcharts-tooltip * {
+        font-family: inherit;
+      }
+
+      .apexcharts-tooltip-title {
+        padding: 6px;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+        background: #eceff1;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+        background: rgba(0, 0, 0, 0.7);
+        border-bottom: 1px solid #333;
+      }
+
+      .apexcharts-tooltip-text-value,
+      .apexcharts-tooltip-text-z-value {
+        display: inline-block;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      .apexcharts-tooltip-text-z-label:empty,
+      .apexcharts-tooltip-text-z-value:empty {
+        display: none;
+      }
+
+      .apexcharts-tooltip-text-value,
+      .apexcharts-tooltip-text-z-value {
+        font-weight: 600;
+      }
+
+      .apexcharts-tooltip-marker {
+        min-width: 12px;
+        min-height: 12px;
+        position: relative;
+        top: 0px;
+        margin-right: 10px;
+        border-radius: 50%;
+      }
+
+      .apexcharts-tooltip-series-group {
+        padding: 0 10px;
+        display: none;
+        text-align: left;
+        justify-content: left;
+        align-items: center;
+      }
+
+      .apexcharts-tooltip-series-group.apexcharts-active
+        .apexcharts-tooltip-marker {
+        opacity: 1;
+      }
+
+      .apexcharts-tooltip-series-group.apexcharts-active,
+      .apexcharts-tooltip-series-group:last-child {
+        padding-bottom: 4px;
+      }
+
+      .apexcharts-tooltip-series-group-hidden {
+        opacity: 0;
+        height: 0;
+        line-height: 0;
+        padding: 0 !important;
+      }
+
+      .apexcharts-tooltip-y-group {
+        padding: 6px 0 5px;
+      }
+
+      .apexcharts-tooltip-box,
+      .apexcharts-custom-tooltip {
+        padding: 4px 8px;
+      }
+
+      .apexcharts-tooltip-boxPlot {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .apexcharts-tooltip-box > div {
+        margin: 4px 0;
+      }
+
+      .apexcharts-tooltip-box span.value {
+        font-weight: bold;
+      }
+
+      .apexcharts-tooltip-rangebar {
+        padding: 5px 8px;
+      }
+
+      .apexcharts-tooltip-rangebar .category {
+        font-weight: 600;
+        color: #777;
+      }
+
+      .apexcharts-tooltip-rangebar .series-name {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .apexcharts-xaxistooltip {
+        opacity: 0;
+        padding: 9px 10px;
+        pointer-events: none;
+        color: #373d3f;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+        background: #eceff1;
+        border: 1px solid #90a4ae;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-xaxistooltip.apexcharts-theme-dark {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: #fff;
+      }
+
+      .apexcharts-xaxistooltip:after,
+      .apexcharts-xaxistooltip:before {
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .apexcharts-xaxistooltip:after {
+        border-color: rgba(236, 239, 241, 0);
+        border-width: 6px;
+        margin-left: -6px;
+      }
+
+      .apexcharts-xaxistooltip:before {
+        border-color: rgba(144, 164, 174, 0);
+        border-width: 7px;
+        margin-left: -7px;
+      }
+
+      .apexcharts-xaxistooltip-bottom:after,
+      .apexcharts-xaxistooltip-bottom:before {
+        bottom: 100%;
+      }
+
+      .apexcharts-xaxistooltip-top:after,
+      .apexcharts-xaxistooltip-top:before {
+        top: 100%;
+      }
+
+      .apexcharts-xaxistooltip-bottom:after {
+        border-bottom-color: #eceff1;
+      }
+
+      .apexcharts-xaxistooltip-bottom:before {
+        border-bottom-color: #90a4ae;
+      }
+
+      .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+        border-bottom-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+        border-bottom-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-xaxistooltip-top:after {
+        border-top-color: #eceff1;
+      }
+
+      .apexcharts-xaxistooltip-top:before {
+        border-top-color: #90a4ae;
+      }
+
+      .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+        border-top-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+        border-top-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-xaxistooltip.apexcharts-active {
+        opacity: 1;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-yaxistooltip {
+        opacity: 0;
+        padding: 4px 10px;
+        pointer-events: none;
+        color: #373d3f;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+        background: #eceff1;
+        border: 1px solid #90a4ae;
+      }
+
+      .apexcharts-yaxistooltip.apexcharts-theme-dark {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: #fff;
+      }
+
+      .apexcharts-yaxistooltip:after,
+      .apexcharts-yaxistooltip:before {
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .apexcharts-yaxistooltip:after {
+        border-color: rgba(236, 239, 241, 0);
+        border-width: 6px;
+        margin-top: -6px;
+      }
+
+      .apexcharts-yaxistooltip:before {
+        border-color: rgba(144, 164, 174, 0);
+        border-width: 7px;
+        margin-top: -7px;
+      }
+
+      .apexcharts-yaxistooltip-left:after,
+      .apexcharts-yaxistooltip-left:before {
+        left: 100%;
+      }
+
+      .apexcharts-yaxistooltip-right:after,
+      .apexcharts-yaxistooltip-right:before {
+        right: 100%;
+      }
+
+      .apexcharts-yaxistooltip-left:after {
+        border-left-color: #eceff1;
+      }
+
+      .apexcharts-yaxistooltip-left:before {
+        border-left-color: #90a4ae;
+      }
+
+      .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+        border-left-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+        border-left-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-yaxistooltip-right:after {
+        border-right-color: #eceff1;
+      }
+
+      .apexcharts-yaxistooltip-right:before {
+        border-right-color: #90a4ae;
+      }
+
+      .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+        border-right-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+        border-right-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .apexcharts-yaxistooltip.apexcharts-active {
+        opacity: 1;
+      }
+
+      .apexcharts-yaxistooltip-hidden {
+        display: none;
+      }
+
+      .apexcharts-xcrosshairs,
+      .apexcharts-ycrosshairs {
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-xcrosshairs.apexcharts-active,
+      .apexcharts-ycrosshairs.apexcharts-active {
+        opacity: 1;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-ycrosshairs-hidden {
+        opacity: 0;
+      }
+
+      .apexcharts-selection-rect {
+        cursor: move;
+      }
+
+      .svg_select_boundingRect,
+      .svg_select_points_rot {
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+      .apexcharts-selection-rect + g .svg_select_boundingRect,
+      .apexcharts-selection-rect + g .svg_select_points_rot {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .apexcharts-selection-rect + g .svg_select_points_l,
+      .apexcharts-selection-rect + g .svg_select_points_r {
+        cursor: ew-resize;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .svg_select_points {
+        fill: #efefef;
+        stroke: #333;
+        rx: 2;
+      }
+
+      .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+        cursor: crosshair;
+      }
+
+      .apexcharts-svg.apexcharts-zoomable.hovering-pan {
+        cursor: move;
+      }
+
+      .apexcharts-zoom-icon,
+      .apexcharts-zoomin-icon,
+      .apexcharts-zoomout-icon,
+      .apexcharts-reset-icon,
+      .apexcharts-pan-icon,
+      .apexcharts-selection-icon,
+      .apexcharts-menu-icon,
+      .apexcharts-toolbar-custom-icon {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        line-height: 24px;
+        color: #6e8192;
+        text-align: center;
+      }
+
+      .apexcharts-zoom-icon svg,
+      .apexcharts-zoomin-icon svg,
+      .apexcharts-zoomout-icon svg,
+      .apexcharts-reset-icon svg,
+      .apexcharts-menu-icon svg {
+        fill: #6e8192;
+      }
+
+      .apexcharts-selection-icon svg {
+        fill: #444;
+        transform: scale(0.76);
+      }
+
+      .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+      .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+      .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+      .apexcharts-theme-dark .apexcharts-reset-icon svg,
+      .apexcharts-theme-dark .apexcharts-pan-icon svg,
+      .apexcharts-theme-dark .apexcharts-selection-icon svg,
+      .apexcharts-theme-dark .apexcharts-menu-icon svg,
+      .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+        fill: #f3f4f5;
+      }
+
+      .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+      .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+      .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+        fill: #008ffb;
+      }
+
+      .apexcharts-theme-light
+        .apexcharts-selection-icon:not(.apexcharts-selected):hover
+        svg,
+      .apexcharts-theme-light
+        .apexcharts-zoom-icon:not(.apexcharts-selected):hover
+        svg,
+      .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+      .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+      .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+      .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+        fill: #333;
+      }
+
+      .apexcharts-selection-icon,
+      .apexcharts-menu-icon {
+        position: relative;
+      }
+
+      .apexcharts-reset-icon {
+        margin-left: 5px;
+      }
+
+      .apexcharts-zoom-icon,
+      .apexcharts-reset-icon,
+      .apexcharts-menu-icon {
+        transform: scale(0.85);
+      }
+
+      .apexcharts-zoomin-icon,
+      .apexcharts-zoomout-icon {
+        transform: scale(0.7);
+      }
+
+      .apexcharts-zoomout-icon {
+        margin-right: 3px;
+      }
+
+      .apexcharts-pan-icon {
+        transform: scale(0.62);
+        position: relative;
+        left: 1px;
+        top: 0px;
+      }
+
+      .apexcharts-pan-icon svg {
+        fill: #fff;
+        stroke: #6e8192;
+        stroke-width: 2;
+      }
+
+      .apexcharts-pan-icon.apexcharts-selected svg {
+        stroke: #008ffb;
+      }
+
+      .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+        stroke: #333;
+      }
+
+      .apexcharts-toolbar {
+        position: absolute;
+        z-index: 11;
+        max-width: 176px;
+        text-align: right;
+        border-radius: 3px;
+        padding: 0px 6px 2px 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .apexcharts-menu {
+        background: #fff;
+        position: absolute;
+        top: 100%;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 3px;
+        right: 10px;
+        opacity: 0;
+        min-width: 110px;
+        transition: 0.15s ease all;
+        pointer-events: none;
+      }
+
+      .apexcharts-menu.apexcharts-menu-open {
+        opacity: 1;
+        pointer-events: all;
+        transition: 0.15s ease all;
+      }
+
+      .apexcharts-menu-item {
+        padding: 6px 7px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .apexcharts-theme-light .apexcharts-menu-item:hover {
+        background: #eee;
+      }
+
+      .apexcharts-theme-dark .apexcharts-menu {
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+      }
+
+      @media screen and (min-width: 768px) {
+        .apexcharts-canvas:hover .apexcharts-toolbar {
+          opacity: 1;
+        }
+      }
+
+      .apexcharts-datalabel.apexcharts-element-hidden {
+        opacity: 0;
+      }
+
+      .apexcharts-pie-label,
+      .apexcharts-datalabels,
+      .apexcharts-datalabel,
+      .apexcharts-datalabel-label,
+      .apexcharts-datalabel-value {
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .apexcharts-pie-label-delay {
+        opacity: 0;
+        animation-name: opaque;
+        animation-duration: 0.3s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease;
+      }
+
+      .apexcharts-canvas .apexcharts-element-hidden {
+        opacity: 0;
+      }
+
+      .apexcharts-hide .apexcharts-series-points {
+        opacity: 0;
+      }
+
+      .apexcharts-gridline,
+      .apexcharts-annotation-rect,
+      .apexcharts-tooltip .apexcharts-marker,
+      .apexcharts-area-series .apexcharts-area,
+      .apexcharts-line,
+      .apexcharts-zoom-rect,
+      .apexcharts-toolbar svg,
+      .apexcharts-area-series
+        .apexcharts-series-markers
+        .apexcharts-marker.no-pointer-events,
+      .apexcharts-line-series
+        .apexcharts-series-markers
+        .apexcharts-marker.no-pointer-events,
+      .apexcharts-radar-series path,
+      .apexcharts-radar-series polygon {
+        pointer-events: none;
+      }
+
+      /* markers */
+
+      .apexcharts-marker {
+        transition: 0.15s ease all;
+      }
+
+      @keyframes opaque {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Resize generated styles */
+
+      @keyframes resizeanim {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      .resize-triggers {
+        animation: 1ms resizeanim;
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      .resize-triggers,
+      .resize-triggers > div,
+      .contract-trigger:before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .resize-triggers > div {
+        background: #eee;
+        overflow: auto;
+      }
+
+      .contract-trigger:before {
+        width: 200%;
+        height: 200%;
+      }
+    </style>
+    <meta
+      http-equiv="origin-trial"
+      content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9"
+    />
+    <script
+      type="text/javascript"
+      async=""
+      src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/683118612/?random=1688842246761&amp;cv=11&amp;fst=1688842246761&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45He3750&amp;u_w=1440&amp;u_h=900&amp;url=https%3A%2F%2Fdemo.themesberg.com%2Fvolt-pro%2Fpages%2Fdashboard%2Fdashboard.html&amp;ref=https%3A%2F%2Fdemo.themesberg.com%2Fvolt-pro%2F&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=Volt%20-%20Premium%20Bootstrap%205%20Dashboard&amp;uaa=arm&amp;uab=64&amp;uafvl=Not_A%2520Brand%3B99.0.0.0%7CGoogle%2520Chrome%3B109.0.5414.87%7CChromium%3B109.0.5414.87&amp;uamb=0&amp;uap=macOS&amp;uapv=12.2.1&amp;uaw=0&amp;rfmt=3&amp;fmt=4"
+    ></script>
+
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="https://demo.themesberg.com/volt-pro/assets/img/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://demo.themesberg.com/volt-pro/assets/img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://demo.themesberg.com/volt-pro/assets/img/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="https://demo.themesberg.com/volt-pro/assets/img/favicon/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="https://demo.themesberg.com/volt-pro/assets/img/favicon/safari-pinned-tab.svg"
+      color="#ffffff"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/sweetalert2/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/notyf/notyf.min.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/fullcalendar/main.min.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/apexcharts/dist/apexcharts.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/dropzone/dist/min/dropzone.min.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/choices.js/public/assets/styles/choices.min.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="https://demo.themesberg.com/volt-pro/vendor/leaflet/dist/leaflet.css"
+      rel="stylesheet"
+    />
+    <link type="text/css" href="https://demo.themesberg.com/volt-pro/css/volt.css" rel="stylesheet" />
+    <script
+      type="text/javascript"
+      async=""
+      src="https://www.google-analytics.com/analytics.js"
+    ></script>
+    <script
+      async=""
+      src="https://www.googletagmanager.com/gtm.js?id=GTM-THQTXJ7"
+    ></script>
+    <script
+      async=""
+      src="https://www.googletagmanager.com/gtag/js?id=UA-141734189-6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-141734189-6");
+    </script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          "gtm.start": new Date().getTime(),
+          event: "gtm.js",
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-THQTXJ7");
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+
+    <noscript
+    ><iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-THQTXJ7"
+      height="0"
+      width="0"
+      style="display: none; visibility: hidden"
+    ></iframe
+  ></noscript>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/@popperjs/core/dist/umd/popper.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/onscreen/dist/on-screen.umd.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/nouislider/distribute/nouislider.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/countup.js/dist/countUp.umd.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/simple-datatables/dist/umd/simple-datatables.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/fullcalendar/main.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/dropzone/dist/min/dropzone.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/notyf/notyf.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/leaflet/dist/leaflet.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/svgmap/dist/svgMap.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/simplebar/dist/simplebar.min.js"></script>
+  <script src="https://demo.themesberg.com/volt-pro/vendor/sortablejs/Sortable.min.js"></script>
+  <script
+    async=""
+    defer="defer"
+    src="https://buttons.github.io/buttons.js"
+  ></script>
+  <script src="https://demo.themesberg.com/volt-pro/assets/js/volt.js"></script>
+  <script
+    defer=""
+    src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+    integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+    data-cf-beacon='{"rayId":"7e1753250bf60db6","version":"2023.4.0","r":1,"token":"3a2c60bab7654724a0f7e5946db4ea5a","si":100}'
+    crossorigin="anonymous"
+  ></script>
+  <script
+    type="text/javascript"
+    id=""
+    src="https://cdn.paddle.com/paddle/paddle.js"
+  ></script>
+  <svg
+    id="SvgjsSvg1001"
+    width="2"
+    height="0"
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:svgjs="http://svgjs.com/svgjs"
+    style="
+      overflow: hidden;
+      top: -100%;
+      left: -100%;
+      position: absolute;
+      opacity: 0;
+    "
+  >
+    <defs id="SvgjsDefs1002"></defs>
+    <polyline id="SvgjsPolyline1003" points="0,0"></polyline>
+    <path
+      id="SvgjsPath1004"
+      d="M-1 700L-1 700C-1 700 17.1 700 17.1 700C17.1 700 34.2 700 34.2 700C34.2 700 51.300000000000004 700 51.300000000000004 700C51.300000000000004 700 68.4 700 68.4 700C68.4 700 85.5 700 85.5 700C85.5 700 102.60000000000001 700 102.60000000000001 700C102.60000000000001 700 119.7 700 119.7 700C119.7 700 136.8 700 136.8 700C136.8 700 153.9 700 153.9 700C153.9 700 171 700 171 700C171 700 171 700 171 700 "
+    ></path>
+  </svg>
+  <div class="svgMap-tooltip">
+    <div class="svgMap-tooltip-content-wrapper"></div>
+    <div class="svgMap-tooltip-pointer"></div>
+  </div>
+  <script type="text/javascript" id="">
+    if ("demo.themesberg.com" === window.location.hostname) {
+      Paddle.Setup({ vendor: 113942 });
+      var setDomain = "themesberg.com",
+        getCookies = function () {
+          for (
+            var b = document.cookie.split(";"), c = {}, a = 0;
+            a < b.length;
+            a++
+          ) {
+            var d = b[a].split("\x3d");
+            c[(d[0] + "").trim()] = decodeURIComponent(d[1]);
+          }
+          return c;
+        },
+        setCookie = function (b, c, a, d) {
+          var e = new Date();
+          e.setTime(e.getTime() + 864e5 * a);
+          a = "expires\x3d" + e.toUTCString();
+          document.cookie =
+            b + "\x3d" + c + ";" + a + ";domain\x3d" + d + ";path\x3d/";
+        },
+        deleteCookie = function (b) {
+          document.cookie =
+            b + "\x3d;expires\x3dThu, 01 Jan 1970 00:00:01 GMT;";
+        },
+        setPaddleCookies = function (b) {
+          var c = getCookies();
+          Object.keys(c).forEach(function (a) {
+            a.startsWith("paddlejs_") &&
+              (deleteCookie(a), setCookie(a, c[a], 30, b));
+          });
+        };
+      setPaddleCookies(setDomain);
+    }
+  </script>
+  </body>
+</html>
