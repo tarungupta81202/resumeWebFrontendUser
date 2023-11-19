@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormsService } from "../services/forms.service";
 import { Route, Router } from "@angular/router";
 import { ApiService } from "../services/api.service";
+import { GlobalService } from "../services/global.service";
 
 @Component({
   selector: "app-login",
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public formService: FormsService,
     private router: Router,
-    public apiService: ApiService
+    public apiService: ApiService,
+    public globalService:GlobalService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
             if (response?.["data"]?.["token"]) {
               this.apiService.token = response?.["data"]?.["token"];
               const decodeDetails = this.apiService.decodeToken();
+              this.globalService.userDetails = decodeDetails;
               this.apiService.storeSession("token", this.apiService.token);
               this.apiService.storeSession("userDetails", decodeDetails);
               this.apiService.updateAuthenticationStatus(true);

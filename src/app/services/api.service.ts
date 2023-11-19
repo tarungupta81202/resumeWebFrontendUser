@@ -86,11 +86,10 @@ export class ApiService {
 
   async autoLogin() {
     const savedToken = sessionStorage.getItem("token");
-    console.log(savedToken);
-    
+
     if (savedToken) {
       this.updateAuthenticationStatus(true);
-      this.router.navigateByUrl("user");
+      // this.router.navigateByUrl("user");
     }
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public globalService:GlobalService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
 }
