@@ -9,9 +9,10 @@ import { ForgetPasswordComponent } from "./forget-password/forget-password.compo
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { InterceptorInterceptor } from "./services/interceptor.interceptor";
-import { LoaderComponent } from './common/loader/loader.component';
-import { ToastComponent } from './common/toast/toast.component';
-import { AlertComponent } from './common/alert/alert.component';
+import { LoaderComponent } from "./common/loader/loader.component";
+import { ToastComponent } from "./common/toast/toast.component";
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -21,13 +22,19 @@ import { AlertComponent } from './common/alert/alert.component';
     ForgetPasswordComponent,
     LoaderComponent,
     ToastComponent,
-    AlertComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true,
+      preventDuplicates: true,
+    }),
   ],
   providers: [
     {

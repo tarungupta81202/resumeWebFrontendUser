@@ -1,0 +1,60 @@
+#logo {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+.logo_square {
+  opacity: 0;
+  animation: zoomIn 2s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+// Syntax:
+// • "b" : bottom
+// • "m" : middle
+// • "t" : top
+// • "l" : left
+// • "r" : right
+
+// Reveal the squares sequentially from the bottom left to top right.
+
+#b-l {
+  animation-delay: 0s;
+}
+#b-m,
+#m-l {
+  animation-delay: 0.1s;
+}
+#m-m {
+  animation-delay: 0.3s;
+}
+#m-r {
+  animation-delay: 0.3s;
+}
+#t-m,
+#m-r {
+  animation-delay: 0.5s;
+}
+#t-r {
+  animation-delay: 0.7s;
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+  20%,
+  60% {
+    // pause for a hot second
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  80%,
+  100% {
+    // clear animation before restarting
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+}

@@ -16,21 +16,46 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formService.loginForm.get("email")?.setValue("tg@gmail.com");
-    this.formService.loginForm.get("password")?.setValue("123");
+    this.formService.initializeForm();
+    this.formService.loginForm
+      .get("email")
+      ?.setValue("tg.whiteforce@gmail.com");
+    this.formService.loginForm.get("password")?.setValue("12345678");
   }
 
   async loginSubmit() {
     if (this.formService.loginForm.get("email")?.valid) {
-      if (
-        this.formService.loginForm.get("email")?.value === "tg@gmail.com" &&
-        this.formService.loginForm.get("password")?.value === "123"
-      ) {
-        const response = await this.apiService.postMethod('users/login',this.formService.loginForm.value)
-        console.log(response);
-
-        this.router.navigateByUrl("user");
-      }
+      this.apiService
+        .postMethod("users/login", this.formService.loginForm.value)
+        .then((response: any) => {
+          if (
+            response["statusCode"] === 200 &&
+            response?.["success"] === true &&
+            response?.["data"]
+          ) {
+            if (response?.["data"]?.["token"]) {
+              this.apiService.token = response?.["data"]?.["token"];
+              const decodeDetails = this.apiService.decodeToken();
+              this.apiService.storeSession("token", this.apiService.token);
+              this.apiService.storeSession("userDetails", decodeDetails);
+              this.apiService.updateAuthenticationStatus(true);
+              this.router.navigateByUrl("user");
+              this.apiService.toastSuccess(response?.["message"]);
+            }
+          } else {
+            if (
+              response["statusCode"] === 200 &&
+              response?.["success"] === true &&
+              !response?.["data"] &&
+              response?.["message"]
+            ) {
+              this.apiService.toastError(response?.["message"]);
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 }

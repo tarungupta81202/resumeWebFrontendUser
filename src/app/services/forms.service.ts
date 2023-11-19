@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormsService {
 
-  loginForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
 
-  constructor(private formBuilder:FormBuilder) {
-    this.initializeForm()
-  }
+  constructor(private formBuilder:UntypedFormBuilder) {}
 
   initializeForm() {
     this.loginForm = this.formBuilder.group({
