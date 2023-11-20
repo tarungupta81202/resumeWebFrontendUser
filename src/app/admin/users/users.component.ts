@@ -41,7 +41,7 @@ export class UsersComponent implements OnInit {
         }
       })
       .catch((error) => {
-        this.apiService.toastError(error.message);
+        this.apiService.toastError(error.error.errors);
       });
   }
 }
