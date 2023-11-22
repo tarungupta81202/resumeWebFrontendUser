@@ -9,6 +9,7 @@ import { SettingComponent } from './setting/setting.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NearbyJobsComponent } from './nearby-jobs/nearby-jobs.component';
 import { UsersComponent } from './users/users.component';
+import { IsAdminGuard } from '../gaurds/is-admin.guard';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component:UsersComponent
+        component:UsersComponent,
+        canActivate:[IsAdminGuard]
       },
       {
         path:'setting',

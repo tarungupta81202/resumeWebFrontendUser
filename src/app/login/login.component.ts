@@ -41,8 +41,9 @@ export class LoginComponent implements OnInit {
               this.globalService.userDetails = decodeDetails;
               this.apiService.storeSession("token", this.apiService.token);
               this.apiService.storeSession("userDetails", decodeDetails);
+              this.apiService.isAdminStatus(this.globalService.userDetails?.["is_superuser"])
               this.apiService.updateAuthenticationStatus(true);
-              this.router.navigateByUrl("user");
+              this.router.navigateByUrl("dashboard");
               this.apiService.toastSuccess(response?.["message"]);
             }
           } else {

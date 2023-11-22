@@ -14,7 +14,7 @@ const routes: Routes = [
     component: SignupComponent,
   },
   {
-    path: "user",
+    path: "dashboard",
     loadChildren: () =>
       import("./admin/admin.module").then((m) => m.AdminModule),
     canActivate: [AuthGuard],

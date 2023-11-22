@@ -14,7 +14,9 @@ import { Router } from "@angular/router";
 export class ApiService {
   private loader_data = new BehaviorSubject<boolean>(false);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  isAdmin$ = this.isAdminSubject.asObservable();
   token: string = "";
   rootUrl: string = "";
 
@@ -40,6 +42,10 @@ export class ApiService {
 
   updateAuthenticationStatus(isAuthenticated: boolean) {
     this.isAuthenticatedSubject.next(isAuthenticated);
+  }
+
+  isAdminStatus(isAdmin: boolean) {
+    this.isAdminSubject.next(isAdmin);
   }
 
   alertSuccess(title: string, message: string) {
