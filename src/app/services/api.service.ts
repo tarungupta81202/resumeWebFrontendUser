@@ -74,7 +74,7 @@ export class ApiService {
   }
 
   toastSuccess(message: string) {
-    this.toastr.success("Hello, this is a success toast!", "Success");
+    this.toastr.success(message);
   }
 
   toastError(message: string) {
