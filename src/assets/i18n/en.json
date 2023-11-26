@@ -1,0 +1,10 @@
+{
+    "title":"Resume",
+    "login": {
+        "title":"Sign in to our platform",
+        "email.label":"Your Email",
+        "password.label":"Your Password",
+        "email.placeholder":"Your Email",
+        "password.placeholder":"Password"
+    }
+}
