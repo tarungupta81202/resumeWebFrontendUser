@@ -109,7 +109,7 @@ button.toast-close-button {
   border-radius: 6px;
 }
 .toast-container .ngx-toastr:hover {
-  box-shadow: 0 0 12px #000000;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   opacity: 1;
   cursor: pointer;
 }
@@ -162,7 +162,7 @@ button.toast-close-button {
   left: 0;
   bottom: 0;
   height: 4px;
-  background-color: #000000;
+  background-color: #d9d9d9;
   opacity: 0.4;
 }
 /* Responsive Design */
