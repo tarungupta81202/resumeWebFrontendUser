@@ -7,11 +7,12 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
   constructor(public globalService:GlobalService) { }
 
   ngOnInit(): void {
-    
+    if (window.location.href === 'http://localhost:4200/dashboard/live-previews') {
+      this.globalService.hideHeader = false
+    }
   }
 
 }
