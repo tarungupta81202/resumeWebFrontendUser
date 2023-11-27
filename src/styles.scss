@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-// @import "~ngx-toastr/toastr.css";
+@import "assets/css/style.css";
 
 /* position */
 .toast-center-center {
@@ -191,4 +191,8 @@ button.toast-close-button {
     padding: 15px 15px 15px 50px;
     width: 25em;
   }
+}
+
+a {
+  text-decoration: none;
 }

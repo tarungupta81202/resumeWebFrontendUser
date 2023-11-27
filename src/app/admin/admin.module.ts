@@ -19,6 +19,9 @@ import { ResumeTemplateCreateComponent } from './resume-template-create/resume-t
 import { ResumeTemplateEditComponent } from './resume-template-edit/resume-template-edit.component';
 import { NearbyJobsComponent } from './nearby-jobs/nearby-jobs.component';
 import { UsersComponent } from './users/users.component';
+import { TemplatesComponent } from './templates/templates.component';
+import { FillInComponent } from './fill-in/fill-in.component';
+import { JobsComponent } from './jobs/jobs.component';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { UsersComponent } from './users/users.component';
     ResumeTemplateCreateComponent,
     ResumeTemplateEditComponent,
     NearbyJobsComponent,
-    UsersComponent
+    UsersComponent,
+    TemplatesComponent,
+    FillInComponent,
+    JobsComponent
   ],
   imports: [
     CommonModule,

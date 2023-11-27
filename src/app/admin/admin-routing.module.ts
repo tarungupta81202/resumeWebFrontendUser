@@ -10,14 +10,17 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { NearbyJobsComponent } from './nearby-jobs/nearby-jobs.component';
 import { UsersComponent } from './users/users.component';
 import { IsAdminGuard } from '../gaurds/is-admin.guard';
+import { TemplatesComponent } from './templates/templates.component';
+import { FillInComponent } from './fill-in/fill-in.component';
+import { JobsComponent } from './jobs/jobs.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: AdminComponent,
     children: [
       {
-        path: '',
+        path: 'resumes',
         component: DashboardComponent,
       },
       {
@@ -48,9 +51,21 @@ const routes: Routes = [
       {
         path:'setting',
         component:SettingComponent
+      },
+      {
+        path:'fill-in',
+        component:FillInComponent
+      },
+      {
+        path:"templates",
+        component:TemplatesComponent
       }
     ],
   },
+  {
+    path: "pyjama-jobs",
+    component: JobsComponent
+  }
 ];
 
 @NgModule({
