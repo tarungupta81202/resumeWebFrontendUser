@@ -13,6 +13,7 @@ import { IsAdminGuard } from '../gaurds/is-admin.guard';
 import { TemplatesComponent } from './templates/templates.component';
 import { FillInComponent } from './fill-in/fill-in.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { LivePreviewComponent } from './live-preview/live-preview.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
       {
         path:"templates",
         component:TemplatesComponent
+      },
+      {
+        path:"live-previews",
+        component:LivePreviewComponent
       }
     ],
   },

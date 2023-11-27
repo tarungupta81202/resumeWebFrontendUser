@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  hideFooter:any=false
   constructor() { }
 
   ngOnInit(): void {
+    if(window.location.href === 'http://localhost:4200/dashboard/fill-in') {
+      this.hideFooter = false;
+    }
   }
 
 }

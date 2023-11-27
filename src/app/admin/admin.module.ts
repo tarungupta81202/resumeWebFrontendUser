@@ -22,6 +22,7 @@ import { UsersComponent } from './users/users.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { FillInComponent } from './fill-in/fill-in.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { LivePreviewComponent } from './live-preview/live-preview.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { JobsComponent } from './jobs/jobs.component';
     UsersComponent,
     TemplatesComponent,
     FillInComponent,
-    JobsComponent
+    JobsComponent,
+    LivePreviewComponent
   ],
   imports: [
     CommonModule,
