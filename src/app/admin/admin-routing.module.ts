@@ -2,12 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TaskListComponent } from './task-list/task-list.component';
-import { TaskCreateComponent } from './task-create/task-create.component';
-import { TaskEditComponent } from './task-edit/task-edit.component';
 import { SettingComponent } from './setting/setting.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { NearbyJobsComponent } from './nearby-jobs/nearby-jobs.component';
 import { UsersComponent } from './users/users.component';
 import { IsAdminGuard } from '../gaurds/is-admin.guard';
 import { TemplatesComponent } from './templates/templates.component';
@@ -21,24 +17,8 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       {
-        path: 'resumes',
-        component: DashboardComponent,
-      },
-      {
-        path:'tasks',
-        component:TaskListComponent,
-      },
-      {
-        path:'tasks/create',
-        component:TaskCreateComponent
-      },
-      {
-        path:'tasks/edit',
-        component:TaskEditComponent
-      },
-      {
-        path:'nearbyJobs',
-        component:NearbyJobsComponent
+        path: 'dashboard',
+        loadChildren: () => import('../admin/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: 'calendar',
