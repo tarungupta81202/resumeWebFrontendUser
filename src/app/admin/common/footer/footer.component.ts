@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(public globalService:GlobalService) { }
 
   ngOnInit(): void {
+    if (window.location.href === 'http://localhost:4200/dashboard/live-previews') {
+      this.globalService.hideFooter = false
+    }
   }
 
 }

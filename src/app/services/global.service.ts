@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
 
   userDetails:any;
+  hideHeader:boolean=true;
+  hideFooter:boolean=true;
 
   constructor() { }
 }
