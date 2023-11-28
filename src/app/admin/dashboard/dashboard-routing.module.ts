@@ -12,7 +12,7 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
-        path: "resume",
+        path: "resumes",
         component: ResumesComponent,
       },
       {

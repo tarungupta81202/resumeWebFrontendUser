@@ -11,7 +11,9 @@ export class FooterComponent implements OnInit {
   constructor(public globalService:GlobalService) { }
 
   ngOnInit(): void {
-    if (window.location.href === 'http://localhost:4200/dashboard/live-previews') {
+    if (window.location.href === 'http://localhost:4200/live-previews') {
+      this.globalService.hideFooter = false
+    } else if(window.location.href === 'http://localhost:4200/fill-in'){
       this.globalService.hideFooter = false
     }
   }

@@ -46,28 +46,35 @@
       <button type="button" class="btn-w-sm btn-upgrade btn btn-primary">
         Upgrade
       </button>
-      <div class="UserMenu__wrapper___RoO7_ToFkC show dropdown">
-        <button class="btn UserMenu__avatar___fEpoTCFD7r dropdown-toggle" aria-haspopup="true" aria-expanded="true">
+      <div [ngClass]="{
+          show: showProfile,
+          'UserMenu__wrapper___RoO7_ToFkC dropdown': true
+        }">
+        <button class="btn UserMenu__avatar___fEpoTCFD7r dropdown-toggle" aria-haspopup="true" aria-expanded="true"
+          (click)="oneProfile()">
           <div class="UserMenu__circle-avatar___tDc0iKDbB1">
             <img
               src="https://s3-eu-west-1.amazonaws.com/avatars-kickresume-com/user-avatars/1956123/9e18550ac92efcf3afd37f11f459ba0d.jpg"
               alt="Dropdown icon" />
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+          <svg *ngIf="showProfile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
             class="UserMenu__arrow___wG8kXhBHZM UserMenu__open___y8R4xF4y_b">
             <path fill-rule="evenodd"
               d="M11.305 16.368 4.287 9.1c-.383-.423-.383-1.07 0-1.468a.985.985 0 0 1 1.414 0L12 14.178l6.3-6.546c.407-.398 1.03-.398 1.413 0s.383 1.045 0 1.468l-6.994 7.268c-.408.398-1.03.398-1.414 0z">
             </path>
           </svg>
+
+          <svg *ngIf="!showProfile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            class="UserMenu__arrow___wG8kXhBHZM">
+            <path fill-rule="evenodd"
+              d="M11.305 16.368 4.287 9.1c-.383-.423-.383-1.07 0-1.468a.985.985 0 0 1 1.414 0L12 14.178l6.3-6.546c.407-.398 1.03-.398 1.413 0s.383 1.045 0 1.468l-6.994 7.268c-.408.398-1.03.398-1.414 0z">
+            </path>
+          </svg>
         </button>
-        <div x-placement="bottom-end" aria-labelledby=""
-          class="UserMenu__menu___WHS1eWEVa5 UserMenu__fullscreen___wCCRXQIqIc dropdown-menu show dropdown-menu-right"
-          style="
-            position: absolute;
-            inset: 0px 0px auto auto;
-            margin: 0px;
-            transform: translate(0px, 60px);
-          " data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-end">
+        <div x-placement="bottom-end" aria-labelledby="" [ngClass]="{
+            'UserMenu__menu___WHS1eWEVa5 UserMenu__fullscreen___wCCRXQIqIc dropdown-menu dropdown-menu-right': true,
+            'show showProfile': showProfile
+          }" data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-end">
           <div class="MenuDropdown__wrapper___aLD5snqypz">
             <a href="/profile/info/" class="MenuDropdown__header___ZuxsTtwhRM dropdown-item">
               <div class="MenuDropdown__name___Vqb7HtrAZX">Tarun Gupta</div>

@@ -13,7 +13,7 @@ import { LivePreviewComponent } from './live-preview/live-preview.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: AdminComponent,
     children: [
       {
