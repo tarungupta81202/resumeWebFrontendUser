@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/css/style.css";
 
+body{
+  background: #ffffff;
+}
 /* position */
 .toast-center-center {
   top: 50%;
@@ -199,4 +202,12 @@ a {
 
 .paddingtop {
   padding-top: 60px;
+}
+
+.paddingBottom {
+  padding-bottom: 60px;
+}
+
+.bgGrayCustom {
+  background: #FAFAFA;
 }
